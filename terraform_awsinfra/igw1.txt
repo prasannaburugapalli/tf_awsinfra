@@ -1,0 +1,32 @@
+resource "aws_internet_gateway" "ALserver_igw" {
+  vpc_id = aws_vpc.ALserver_vpc.id
+
+  tags = {
+    Name = "ALserver_igw"
+  }
+}
+
+
+
+#creating ElasticIP
+resource "aws_eip" "Nat_eip" {
+  vpc      = true
+}
+
+#creating NAT gateway
+resource "aws_nat_gateway" "ALserver_Natgw" {
+  allocation_id = aws_eip.Nat_eip.id
+  subnet_id     = aws_subnet.al_pubsub.id
+
+  tags = {
+    Name = "Alserver_Natgw"
+  }
+
+  # To ensure proper ordering, it is recommended to add an explicit dependency
+  # on the Internet Gateway for the VPC.
+  depends_on = [aws_internet_gateway.ALserver_igw]
+}
+
+
+note:  we should give creating Nat id in public subnet because only pub sub has access to igw.So the nat gateway connect to igw for internet.
+then we should associate pvt subnet to natgateway in route  

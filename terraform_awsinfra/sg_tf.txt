@@ -1,0 +1,56 @@
+resource "aws_security_group" "AL_pvt_sg" {
+description = "creating custom sg"
+name = "AL_pvt_sg"
+vpc_id = aws_vpc.ALserver_vpc.id
+
+ingress {
+description = "allowing with in vpc"
+from_port = 80
+to_port = 80
+protocol = "tcp"
+cidr_blocks = ["192.0.0.0/24"]
+
+}
+
+egress {
+from_port = 0
+to_port = 0
+protocol = "-1"
+cidr_blocks =["192.0.0.0/24"]
+
+}
+
+tags = {
+  Name ="AL_pvt_sg"
+
+}
+
+}
+
+resource "aws_security_group" "AL_pub_sg" {
+name = "AL_pub_sg"
+vpc_id = aws_vpc.ALserver_vpc.id
+
+ingress {
+from_port = 0
+to_port = 0
+protocol = "-1"
+cidr_blocks = ["0.0.0.0/0"]
+
+}
+
+egress {
+from_port = 0
+to_port = 0
+protocol = "-1"
+cidr_blocks =["0.0.0.0/0"]
+
+}
+tags = {
+  Name ="AL_pub_sg"
+
+}
+
+}
+
+note:error:i ve removed "" in vpc id then it executed

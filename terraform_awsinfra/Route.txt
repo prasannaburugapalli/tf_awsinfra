@@ -1,0 +1,47 @@
+#creating rout table
+resource "aws_route_table" "ALserver_route_pub" {
+  vpc_id         =  aws_vpc.ALserver_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.ALserver_igw.id
+  }
+
+tags = {
+    Name = "ALserver_route_pub"
+  }
+
+}
+
+#Route table association
+
+resource "aws_route_table_association" "ALserver_route_pub_asso" {
+  subnet_id      = aws_subnet.al_pubsub.id
+  route_table_id = aws_route_table.ALserver_route_pub.id
+}
+
+#creating private route table
+resource "aws_route_table" "ALserver_route_pvt" {
+  vpc_id = aws_vpc.ALserver_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+   nat_gateway_id = aws_nat_gateway.ALserver_Natgw.id
+  }
+
+
+  tags = {
+    Name = "ALserver_route_pvt"
+  }
+}
+
+#PVT Route table association
+
+resource "aws_route_table_association" "ALserver_route_pvt_asso" {
+  subnet_id      = aws_subnet.al_pvtsub.id
+  route_table_id = aws_route_table.ALserver_route_pvt.id
+}
+
+note:While creating route table for pub/pvt we should give cidr range 0.0.0.0/0
+not vpc cidr range,because it should allow all the ips from internet
+we should not give double coats for any ids

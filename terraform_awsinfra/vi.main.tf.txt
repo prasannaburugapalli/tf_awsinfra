@@ -1,0 +1,23 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "4.20.1"
+    }
+  }
+}
+
+provider "aws" {
+  # Configuration options
+  region = "us-west-2"
+access_key = "AKIASRDGJ2DMNOY2PY77"
+secret_key = "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"
+}
+resource "aws_instance" "tf_server" {
+  ami           = "ami-038d9bb3051d075f0"
+  instance_type = "t2.micro"
+  key_name      = "Terr_key"
+  tags = {
+    Name = "ALserver by Terraform"    
+}
+  }

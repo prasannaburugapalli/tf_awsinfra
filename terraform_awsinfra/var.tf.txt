@@ -1,0 +1,17 @@
+variable "ami" {
+ description = "Amazon machine image"
+ default = "ami-0ca285d4c2cda3300"
+}
+
+variable "instance_type" {
+ description = "Amazon instance type like t2.micro,t3.micro"
+ default = "t2.micro"
+}
+variable "key_name" {
+default = "Tf_key"
+}
+variable  "region" {
+default = "us-west-2"
+}
+
+

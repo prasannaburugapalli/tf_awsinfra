@@ -1,0 +1,31 @@
+
+
+
+#creating pub-sub net
+
+resource "aws_subnet" "al_pubsub" {
+  vpc_id                                      = "${aws_vpc.ALserver_vpc.id}"
+  cidr_block                                  = "192.0.0.0/26"
+  availability_zone                            = "ap-south-1b"
+  enable_resource_name_dns_a_record_on_launch = "true"
+  map_public_ip_on_launch                     = "true"
+
+  tags = {
+    Name = "AL_pubsub-1"
+
+  }
+}
+
+resource "aws_subnet" "al_pvtsub" {
+vpc_id = "${aws_vpc.ALserver_vpc.id}"
+cidr_block  = "192.0.0.64/26"
+availability_zone = "ap-south-1a"
+enable_resource_name_dns_a_record_on_launch ="true"
+
+tags ={
+Name = "AL_pvtsub-1"
+
+   }
+ }
+
+

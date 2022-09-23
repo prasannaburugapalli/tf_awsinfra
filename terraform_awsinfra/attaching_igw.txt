@@ -1,0 +1,8 @@
+resource "aws_internet_gateway_attachment" "ALserver_igw_attachment" {
+  internet_gateway_id = aws_internet_gateway.ALserver_igw.id
+  vpc_id              = aws_vpc.ALserver_vpc.id
+}
+
+Note:no need to use this seperately,while creating igw  if we mention vpc by default 
+it is connected to the vpc which is mentioned in igw.
+if we not mention vpc in igw we can attach igw to vpc using above script 
